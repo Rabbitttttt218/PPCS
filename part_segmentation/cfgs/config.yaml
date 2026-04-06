@@ -1,0 +1,17 @@
+# 添加zigzag参数
+model: "pt_mamba"
+trans_dim: 384
+depth: 12
+drop_path_rate: 0.1
+rms_norm: False
+use_cls_token: False
+drop_path: 0.2
+drop_out: 0.
+fetch_idx: [3, 7, 11]
+
+# Zigzag路径参数
+use_zigzag: True       # 是否启用zigzag路径
+num_paths: 6           # 路径数量
+zigzag_indices: [0, 1, 2, 3, 4, 5] # 使用的路径索引
+
+
