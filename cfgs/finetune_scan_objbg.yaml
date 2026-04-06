@@ -1,0 +1,266 @@
+optimizer : {
+  type: AdamW,
+  kwargs: {
+  lr : 0.0005,
+  weight_decay : 0.05
+  }}
+
+scheduler: {
+  type: CosLR,
+  kwargs: {
+    epochs: 300,
+    initial_epochs : 10
+  }}
+
+dataset : {
+  train : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+            others: {subset: 'train'}},
+  val : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+            others: {subset: 'test'}},
+  test : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+            others: {subset: 'test'}}}
+model : {
+  NAME: PointMamba,
+  trans_dim: 384,
+  depth: 12,
+  cls_dim: 15,
+  num_heads: 6,
+  group_size: 32,
+  num_group: 128,
+  encoder_dims: 384,
+  rms_norm: False,
+  drop_path: 0.1,
+  drop_out: 0.,
+}
+
+
+npoints: 2048
+total_bs : 32
+step_per_update : 1
+max_epoch : 300
+grad_norm_clip : 10
+
+
+
+
+
+
+
+
+# # zigzag
+# optimizer : {
+#   type: AdamW,
+#   kwargs: {
+#   lr : 0.0005,
+#   weight_decay : 0.05
+#   }}
+
+# scheduler: {
+#   type: CosLR,
+#   kwargs: {
+#     epochs: 300,
+#     initial_epochs : 10
+#   }}
+
+# dataset : {
+#   train : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'train'}},
+#   val : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test'}},
+#   test : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test'}}}
+
+# model : {
+#   NAME: PointMamba,
+#   trans_dim: 384,
+#   depth: 12,
+#   cls_dim: 15,
+#   num_heads: 6,
+#   group_size: 32,
+#   num_group: 128,
+#   encoder_dims: 384,
+#   rms_norm: False,
+#   drop_path: 0.1,
+#   drop_out: 0.,
+# }
+
+
+# npoints: 2048
+# total_bs : 32
+# step_per_update : 1
+# max_epoch : 300
+# grad_norm_clip : 10
+
+
+
+
+
+
+# # zigzag——可选
+# # zigzag with specific paths
+# # 使用specific_paths定义要使用的zigzag路径类型：
+# # 0: XY平面zigzag路径
+# # 1: XZ平面zigzag路径
+# # 2: YZ平面zigzag路径
+# # 3: 沿X轴排序
+# # 4: 沿Y轴排序
+# # 5: 沿Z轴排序
+
+# optimizer : {
+#   type: AdamW,
+#   kwargs: {
+#   lr : 0.0005,
+#   weight_decay : 0.05
+#   }}
+
+# scheduler: {
+#   type: CosLR,
+#   kwargs: {
+#     epochs: 300,
+#     initial_epochs : 10
+#   }}
+
+# dataset : {
+#   train : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'train', use_zigzag: true, num_paths: 6, specific_paths: [0, 2, 5]}},
+#   val : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, num_paths: 6, specific_paths: [0, 2, 5]}},
+#   test : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, num_paths: 6, specific_paths: [0, 2, 5]}}}
+
+# model : {
+#   NAME: PointMamba,
+#   trans_dim: 384,
+#   depth: 12,
+#   cls_dim: 15,
+#   num_heads: 6,
+#   group_size: 32,
+#   num_group: 128,
+#   encoder_dims: 384,
+#   rms_norm: False,
+#   drop_path: 0.1,
+#   drop_out: 0.,
+# }
+
+# npoints: 2048
+# total_bs : 32
+# step_per_update : 1
+# max_epoch : 300
+# grad_norm_clip : 10
+
+
+
+
+
+
+
+# # zigzag  and  trans--zigzag
+# optimizer : {
+#   type: AdamW,
+#   kwargs: {
+#   lr : 0.0005,
+#   weight_decay : 0.05
+#   }}
+
+# scheduler: {
+#   type: CosLR,
+#   kwargs: {
+#     epochs: 300,
+#     initial_epochs : 10
+#   }}
+
+# dataset : {
+#   train : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'train', use_zigzag: true, path_strategy: 'both', use_order_indicator: true, num_paths: 6}},
+#   val : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, path_strategy: 'zigzag_only', use_order_indicator: true, num_paths: 6}},
+#   test : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, path_strategy: 'zigzag_only', use_order_indicator: true, num_paths: 6}}}
+
+# model : {
+#   NAME: PointMamba,
+#   trans_dim: 384,
+#   depth: 12,
+#   cls_dim: 15,
+#   num_heads: 6,
+#   group_size: 32,
+#   num_group: 128,
+#   encoder_dims: 384,
+#   rms_norm: False,
+#   drop_path: 0.1,
+#   drop_out: 0.,
+#   # 添加双路径支持配置
+#   use_zigzag: true,
+#   path_strategy: 'both',
+#   use_order_indicator: true,
+#   # 处理双路径的方法
+#   handle_dual_path: true,
+#   concat_method: 'sequential',
+# }
+
+# npoints: 2048
+# total_bs : 32
+# step_per_update : 1
+# max_epoch : 300
+# grad_norm_clip : 10
+
+
+
+
+
+
+
+
+
+# # zigzag 和 trans-zigzag 配置
+# optimizer : {
+#   type: AdamW,
+#   kwargs: {
+#     lr : 0.0005,
+#     weight_decay : 0.05
+#   }
+# }
+
+# scheduler: {
+#   type: CosLR,
+#   kwargs: {
+#     epochs: 300,
+#     initial_epochs : 10
+#   }
+# }
+
+# dataset : {
+#   train : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'train', use_zigzag: true, path_strategy: 'both', use_order_indicator: true, num_paths: 6}},
+#   val : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, path_strategy: 'both', use_order_indicator: true, num_paths: 6}},
+#   test : { _base_: cfgs/dataset_configs/ScanObjectNN_objectbg.yaml,
+#             others: {subset: 'test', use_zigzag: true, path_strategy: 'both', use_order_indicator: true, num_paths: 6}}
+# }
+
+# model : {
+#   NAME: PointMamba,
+#   trans_dim: 384,
+#   depth: 12,
+#   cls_dim: 15,
+#   num_heads: 6,
+#   group_size: 32,
+#   num_group: 128,
+#   encoder_dims: 384,
+#   rms_norm: False,
+#   drop_path: 0.1,
+#   drop_out: 0.,
+#   # 添加双路径支持配置
+#   use_zigzag: true,
+#   path_strategy: 'both',
+#   use_order_indicator: true,
+#   # 处理双路径的方法
+#   handle_dual_path: true,
+#   concat_method: 'sequential',
+# }
+
+# npoints: 2048
+# total_bs : 32
+# step_per_update : 1
+# max_epoch : 300
+# grad_norm_clip : 10
